@@ -1,0 +1,20 @@
+# Specify the output file for the ZorusAgentUpdater
+$OutputFile = "C:\Temp\ZorusAgentUpdater.exe"
+
+$BinaryURL = "https://static.zorustech.com/downloads/ZorusAgentUpdater.exe"
+
+mkdir "C:\Temp"
+
+# Download the file using the given values
+Invoke-WebRequest -Uri $BinaryURL -OutFile $OutputFile
+
+# Check to see if the file was downloaded
+$File = Get-Item -Path $OutputFile 
+
+if ($File -ne 0) {
+    # Execute the agent updater
+    Start-Process -FilePath $OutputFile -ArgumentList "/qn" -Wait
+}
+else {
+    Write-Host "Failed to download the update"
+}
