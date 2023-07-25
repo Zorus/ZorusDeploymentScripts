@@ -1,7 +1,9 @@
 $Token = "";
 $Password = "";
+$trayIcon = 0; # default is 0
+$addRemove = 0; # default is 0
 
-[System.Net.ServicePointManager]::SecurityProtocol = "Tls";
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls;
 
 # Determine whether or not the agent is already installed
 $IsInstalled = $false
@@ -39,18 +41,12 @@ $WebClient.DownloadFile($source, $destination)
 if ([string]::IsNullOrEmpty($Password))
 {
     Write-Host "Installing Zorus Deployment Agent..."
-    Start-Process -FilePath $destination -ArgumentList "/qn","ARCHON_TOKEN=$Token", "HIDE_TRAY_ICON=0", "HIDE_ADD_REMOVE=0" -Wait
-    
-    # copied from "without password" script
-    # Start-Process -FilePath $destination -ArgumentList "/qn","ARCHON_TOKEN=$Token" -Wait
+    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_TRAY_ICON=$trayIcon", "HIDE_ADD_REMOVE=$addRemove" -Wait
 }
 else
 {
     Write-Host "Installing Zorus Deployment Agent with password..."
-    Start-Process -FilePath $destination -ArgumentList "/qn","ARCHON_TOKEN=$Token", "HIDE_TRAY_ICON=0", "HIDE_ADD_REMOVE=0", "UNINSTALL_PASSWORD=$Password" -Wait
-
-    # copied from "without password" script
-    # Start-Process -FilePath $destination -ArgumentList "/qn","ARCHON_TOKEN=$Token", "UNINSTALL_PASSWORD=$Password" -Wait
+    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_TRAY_ICON=$trayIcon", "HIDE_ADD_REMOVE=$addRemove", "UNINSTALL_PASSWORD=$Password" -Wait
 }
 
 Write-Host "Removing temporary files..."
