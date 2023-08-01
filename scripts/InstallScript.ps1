@@ -6,27 +6,19 @@ $addRemove = 0; # default is 0
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls;
 
 # Determine whether or not the agent is already installed
-$IsInstalled = $false
 $InstalledSoftware = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
 foreach($obj in $InstalledSoftware)
 {
     if ($obj.GetValue('DisplayName') -match "Archon")
     {
-        $IsInstalled = $true
+        Write-Host "Zorus Deployment Agent is already installed. Exiting."
+        Exit
     }
-}
-
-# If it is installed
-if ($IsInstalled)
-{
-    # We skip the install routine
-    Write-Host "Zorus Deployment Agent is already installed. Exiting."
-    Exit
 }
 
 if ([string]::IsNullOrEmpty($Token))
 {
-    # We skip the install routine
+    # Token must be set
     Write-Host "Deployment token not provided. Exiting."
     Exit
 }
