@@ -10,7 +10,7 @@ then
 	exit 1
 fi
 ZORUS_DEPLOYMENT_TOKEN="$ZORUS_DEPLOYMENT_TOKEN_USER_DEFAULTS"
-ZORUS_SET_DEPLOYMENT_TOKEN="true" # Set this to false if you have an MDM that will deploy the deployment token with another approach.
+ZORUS_SET_DEPLOYMENT_TOKEN=true # Set this to false if you have an MDM that will deploy the deployment token with another approach.
 
 # Do not change these values
 ZORUS_WEB_DOWNLOAD_HOST="portal.zorustech.com"
@@ -59,7 +59,7 @@ echo "Downloading Installer from $ZORUS_WEB_DOWNLOAD_URL."
 curl -f -s -S --connect-timeout 30 --retry 5 --retry-delay 60 -L -o ZorusFilteringInstaller.pkg -H "X-Deployment-Token: $ZORUS_DEPLOYMENT_TOKEN" "$ZORUS_WEB_DOWNLOAD_URL"
 echo "Downloaded Installer to $ZORUS_TEMP_DIR/ZorusFilteringInstaller.pkg."
 
-if [ "$ZORUS_SET_DEPLOYMENT_TOKEN" = "true" ]
+if [ $ZORUS_SET_DEPLOYMENT_TOKEN ]
 then
 	echo "Creating Credentials File."
 	if [ ! -f "$ZORUS_SETTINGS_DIR/credentials.json" ]
@@ -75,7 +75,7 @@ then
 	fi
 	echo "Created Credentials File."
 else
-	echo "Skipped Creating Credentials File.
+	echo "Skipped Creating Credentials File."
 fi
 
 echo "Installing Filtering."
