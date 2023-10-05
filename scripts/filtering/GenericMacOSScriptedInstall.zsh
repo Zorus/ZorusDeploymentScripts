@@ -53,7 +53,7 @@ echo "Downloading Installer from $ZORUS_WEB_DOWNLOAD_URL."
 curl -f -s -S --connect-timeout 30 --retry 5 --retry-delay 60 -L -o ZorusFilteringInstaller.pkg -H "X-Deployment-Token: $ZORUS_DEPLOYMENT_TOKEN" "$ZORUS_WEB_DOWNLOAD_URL"
 echo "Downloaded Installer to $ZORUS_TEMP_DIR/ZorusFilteringInstaller.pkg."
 
-if [ $ZORUS_SET_DEPLOYMENT_TOKEN ]
+if [[ $ZORUS_SET_DEPLOYMENT_TOKEN ]]
 then
 	echo "Creating Credentials File."
 	if [ ! -f "$ZORUS_SETTINGS_DIR/credentials.json" ]

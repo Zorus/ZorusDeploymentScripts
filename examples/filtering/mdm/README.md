@@ -14,6 +14,18 @@ If you have suggestions or proposed changes, feel free to make a PR and it will 
 | MSP Filtering (DNS) | Allows the deployment of a DNS proxy at the operating system level as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A |
 | MSP Filtering (TP) | Allows the deployment of a Transparent Proxy at the operating system as long as it comes from an application or extension signed by a Zorus Team Certificate. | This profile is only available on macOS 14 and higher (Sonoma - 2023). |
 | MSP Filtering (Login Items) | Allows applications signed by a Zorus Team Certificate to add or remove startup items (also known as launch daemons). |  This must be applied at an MDM level. This can't be applied directly to an endpoint and the endpoint must be suprervised for this to work. |
-| MSP Filtering (Chrome) | Configures Chrome to disable DNS-over-HTTPS or DNS-over-TLS in order to work with Zorus Filtering and disables user configuration of the setting. | N/A |
-| MSP Filtering (Firefox) | Configures Chrome to disable DNS-over-HTTPS or DNS-over-TLS and enables the importing of enterprise roots (local endpoint trusted root certificates) in order to work with Zorus Filtering. Additionally prevents the user from making any changes. | N/A |
-| -- | -- | -- |
+| MSP Filtering (Chrome) | Configures Chrome to disable DNS-over-HTTPS or DNS-over-TLS in order to work with Zorus Filtering and disables user configuration of the setting. Additionally prevents the user from making any changes. | N/A |
+| MSP Filtering (Firefox) | Configures Firefox to disable DNS-over-HTTPS or DNS-over-TLS and enables the importing of enterprise roots (local endpoint trusted root certificates) in order to work with Zorus Filtering. Additionally prevents the user from making any changes. | N/A |
+| MSP Filtering (Deployment Token) | Deploys a deployment token to the remote endpoint for use by the Filtering Agent. | N/A |
+
+## Deployment Token
+
+We included a deployment token configuration file under `MSP Filtering (DeploymentToken).mobileconfig` as an example. However, the deployment token may be deployed in any approach which writes to the [defaults system](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/UserDefaults/AboutPreferenceDomains/AboutPreferenceDomains.html) with the `com.ZorusTech` domain and the `DeploymentKey` key.
+
+As a scripted example, consider the following:
+
+```bash
+defaults write com.ZorusTech DeploymentKey -string "YourDeploymentKey"
+```
+
+to be functionally equivalent to the MSP Filtering (Deployment Token).mobileconfig file, however it will require manual removal.
