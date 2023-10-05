@@ -15,7 +15,7 @@ Your active participation and contributions to this repository are highly valued
 ## Profile Descriptions
 
 | Profile Name | Description | Comments | Minimum Requirements |
-| -- | -- | -- |
+| -- | -- | -- | -- |
 | MSP Filtering (System Extensions) | Allows applications signed with a Zorus Team Certificate to install and remove System Extensions from an endpoint. | N/A | macOS 10.15 (Catalina) for installation, macOS 12.0 (Monterey) for removals. |
 | MSP Filtering (DNS) | Allows the deployment of a DNS proxy at the operating system level as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A | macOS 10.15 (Catalina) |
 | MSP Filtering (TP) | Allows the deployment of a Transparent Proxy at the operating system as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A | macOS 14.0 (Sonoma) | 
