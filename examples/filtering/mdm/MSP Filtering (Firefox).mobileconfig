@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+        <key>PayloadDisplayName</key>
+		<string>MSP Filtering (Firefox Settings)</string>
+        <key>PayloadDescription</key>
+        <string>Configures Firefox to work with MSP Filtering.</string>
+		<key>PayloadIdentifier</key>
+		<string>com.ZorusTech.MSP-Filtering.Firefox-Profile</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>DNSOverHTTPS</key>
+				<dict>
+					<key>Enabled</key>
+					<false />
+					<key>Locked</key>
+					<true />
+				</dict>
+				<key>EnterprisePoliciesEnabled</key>
+				<true />
+				<key>ImportEnterpriseRoots</key>
+				<true />
+				<key>PayloadDisplayName</key>
+				<string>Firefox</string>
+				<key>PayloadIdentifier</key>
+				<string>com.ZorusTech.MSP-Filtering.Firefox</string>
+				<key>PayloadType</key>
+				<string>org.mozilla.firefox</string>
+				<key>PayloadUUID</key>
+				<string>e170fb93-9328-44a3-ac1e-5b05166ae349</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>PayloadRemovalDisallowed</key>
+		<true />
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>e244a2ec-af7c-4999-84c3-31d0a1687a98</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+		<key>TargetDeviceType</key>
+		<integer>5</integer>
+	</dict>
+</plist>
