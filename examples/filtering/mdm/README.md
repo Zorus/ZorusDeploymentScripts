@@ -17,7 +17,7 @@ Your active participation and contributions to this repository are highly valued
 | Profile Name | Description | Comments | Minimum Requirements |
 | -- | -- | -- |
 | MSP Filtering (System Extensions) | Allows applications signed with a Zorus Team Certificate to install and remove System Extensions from an endpoint. | N/A | macOS 10.15 (Catalina) for installation, macOS 12.0 (Monterey) for removals. |
-| MSP Filtering (DNS) | Allows the deployment of a DNS proxy at the operating system level as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A | macOS 10.15 (Caralina) |
+| MSP Filtering (DNS) | Allows the deployment of a DNS proxy at the operating system level as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A | macOS 10.15 (Catalina) |
 | MSP Filtering (TP) | Allows the deployment of a Transparent Proxy at the operating system as long as it comes from an application or extension signed by a Zorus Team Certificate. | N/A | macOS 14.0 (Sonoma) | 
 | MSP Filtering (Login Items) | Allows applications signed by a Zorus Team Certificate to add or remove startup items (also known as launch daemons). |  This must be applied at an MDM level. This can't be applied directly to an endpoint and the endpoint must be suprervised for this to work. | macOS 13.0 (Ventura) |
 | MSP Filtering (Chrome) | Configures Chrome to disable DNS-over-HTTPS or DNS-over-TLS in order to work with Zorus Filtering and disables user configuration of the setting. Additionally prevents the user from making any changes. | N/A | |
