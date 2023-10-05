@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>PayloadDisplayName</key>
+		<string>MSP Filtering (System Extensions)</string>
+		<key>PayloadDescription</key>
+		<string>Allows MSP Filtering system extension to be allowed and removed.</string>
+		<key>PayloadIdentifier</key>
+		<string>com.ZorusTech.MSP-Filtering.System-Extensions-Profile</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>AllowedSystemExtensions</key>
+				<dict>
+					<key>X2G78PSXBN</key>
+					<array>
+						<string>com.ZorusTech.Filtering.Redirectors.macOS.Extension</string>
+					</array>
+				</dict>
+				<key>PayloadDisplayName</key>
+				<string>MSP Filtering (System Extensions)</string>
+				<key>PayloadIdentifier</key>
+				<string>com.ZorusTech.MSP-Filtering.System-Extensions</string>
+				<key>PayloadType</key>
+				<string>com.apple.system-extension-policy</string>
+				<key>PayloadUUID</key>
+				<string>e05ac946-54d0-49c2-b5fa-c10808041e03</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+				<key>RemovableSystemExtensions</key>
+				<dict>
+					<key>X2G78PSXBN</key>
+					<array>
+						<string>com.ZorusTech.Filtering.Redirectors.macOS.Extension</string>
+					</array>
+				</dict>
+			</dict>
+		</array>
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>b9b99eb2-a105-4e89-bed0-5782df4a2b17</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+		<key>TargetDeviceType</key>
+		<integer>5</integer>
+	</dict>
+</plist>

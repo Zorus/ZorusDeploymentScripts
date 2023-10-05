@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+        <key>PayloadDisplayName</key>
+		<string>MSP Filtering (Chrome Settings)</string>
+        <key>PayloadDescription</key>
+        <string>Configures Chrome to work with MSP Filtering.</string>
+		<key>PayloadIdentifier</key>
+		<string>com.ZorusTech.MSP-Filtering.Chrome-Profile</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>DnsOverHttpsMode</key>
+				<string>off</string>
+				<key>PayloadDisplayName</key>
+				<string>Google Chrome</string>
+				<key>PayloadIdentifier</key>
+				<string>com.ZorusTech.MSP-Filtering.Chrome</string>
+				<key>PayloadType</key>
+				<string>com.google.Chrome</string>
+				<key>PayloadUUID</key>
+				<string>9715eccb-e8be-48b9-9932-8fcf94899ba8</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>PayloadRemovalDisallowed</key>
+		<true />
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>ddb518c3-2b21-4d3d-ad3e-7467c5ac08ae</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+		<key>TargetDeviceType</key>
+		<integer>5</integer>
+	</dict>
+</plist>

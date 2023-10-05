@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+        <key>PayloadDisplayName</key>
+		<string>MSP Filtering (Login Items)</string>
+        <key>PayloadDescription</key>
+        <string>Allows MSP Filtering applications to be registered and unregistered as system daemons.</string>
+		<key>PayloadIdentifier</key>
+		<string>com.ZorusTech.MSP-Filtering.Login-Items-Profile</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+                <key>PayloadDisplayName</key>
+                <string>MSP Filtering (Login Items)</string>
+				<key>PayloadIdentifier</key>
+				<string>com.ZorusTech.MSP-Filtering.Login-Items</string>
+				<key>PayloadType</key>
+				<string>com.apple.servicemanagement</string>
+				<key>PayloadUUID</key>
+				<string>342f82ef-3442-478d-98af-a7365b7b4483</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+				<key>Rules</key>
+				<array>
+					<dict>
+						<key>RuleType</key>
+						<string>TeamIdentifier</string>
+						<key>RuleValue</key>
+						<string>X2G78PSXBN</string>
+					</dict>
+				</array>
+			</dict>
+		</array>
+		<key>PayloadRemovalDisallowed</key>
+		<true />
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>ed587f9b-44e3-4597-9389-3fc3c2be5068</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+		<key>TargetDeviceType</key>
+		<integer>5</integer>
+	</dict>
+</plist>
