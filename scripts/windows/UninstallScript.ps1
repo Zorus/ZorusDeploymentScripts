@@ -1,6 +1,13 @@
 $Password = ""
 
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls;
+if ([Enum]::GetNames([System.Net.SecurityProtocolType]) -contains 'Tls12')
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+}
+else
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls
+}
 
 $source = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe";
 $destination = "$env:TEMP\ZorusAgentRemovalTool.exe";

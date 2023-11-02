@@ -2,7 +2,14 @@
 # Please do NOT use this for fresh installs as it doesn't allow input for
 # deployment tokens and other necessary first time install variables.
 
-[System.Net.ServicePointManager]::SecurityProtocol = "Tls";
+if ([Enum]::GetNames([System.Net.SecurityProtocolType]) -contains 'Tls12')
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+}
+else
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls
+}
 
 $source = "https://static.zorustech.com/downloads/ZorusInstaller.exe"
 $destination = "$env:TEMP\ZorusInstaller.exe"
