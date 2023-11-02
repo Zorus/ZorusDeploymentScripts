@@ -3,7 +3,14 @@ $Password = "";
 $trayIcon = 0; # default is 0
 $addRemove = 0; # default is 0
 
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls;
+if ([Enum]::GetNames([System.Net.SecurityProtocolType]) -contains 'Tls12')
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+}
+else
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls
+}
 
 # Determine whether or not the agent is already installed
 $InstalledSoftware = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
