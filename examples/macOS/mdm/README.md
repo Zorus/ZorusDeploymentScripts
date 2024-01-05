@@ -23,6 +23,7 @@ Your active participation and contributions to this repository are highly valued
 | MSP Filtering (Chrome) | Configures Chrome to disable DNS-over-HTTPS or DNS-over-TLS in order to work with Zorus Filtering and disables user configuration of the setting. Additionally prevents the user from making any changes. | N/A | |
 | MSP Filtering (Firefox) | Configures Firefox to disable DNS-over-HTTPS or DNS-over-TLS and enables the importing of enterprise roots (local endpoint trusted root certificates) in order to work with Zorus Filtering. Additionally prevents the user from making any changes. | N/A | | 
 | MSP Filtering (Deployment Token) | Deploys a deployment token to the remote endpoint for use by the Filtering Agent. | N/A | macOS 10.7 (Lion) |
+| MSP Filtering (Diagnostic Logging) | Configures the macOS logging system to show private data and persist diagnostic messages taken from the low-level operating system components that process network traffic.| N/A | macOS 10.2 (Sierra) |
 
 ## Deployment Token
 
