@@ -38,21 +38,26 @@ then
 	/Applications/MSP-Filtering.app/Contents/Resources/uninstaller.sh
 fi
 
+getJsonValue() {
+  # $1: JSON string to parse, $2: JSON key to look up
+  # $1 is passed as a command-specific environment variable so that no special
+  # characters in valid JSON need to be escaped, and no code execution is
+  # possible since the contents cannot be interpreted as code when retrieved
+  # within JXA.
+  # $2 is placed directly in the JXA code since it should not be coming from
+  # user input or an arbitrary source where it could be set to intentionally
+  # malicious contents.
+  JSON="$1" osascript -l 'JavaScript' \
+    -e 'const env = $.NSProcessInfo.processInfo.environment.objectForKey("JSON").js' \
+    -e "JSON.parse(env).$2"
+}
+
 # Secondly check if we have an available deployment token from the current endpoint.
-if [[ -z $ZORUS_DEPLOYMENT_TOKEN ]]
+if [[ -z "$ZORUS_DEPLOYMENT_TOKEN" && -f "$ZORUS_CREDENTIALS_FILE" ]]
 then
-    if [[ -f $ZORUS_CREDENTIALS_FILE ]]
-    then
-        CREDENTIAL_FILE_DATA=$(cat $ZORUS_CREDENTIALS_FILE)
-        read -r -d '' JXA <<EOF
-        function run() {
-            var credentialJson = JSON.parse(\`$CREDENTIAL_FILE_DATA\`);
-            return credentialJson.CredentialSettings.DeploymentKey;
-        }
-        EOF
-        ZORUS_DEPLOYMENT_TOKEN=$(osascript -l 'JavaScript' <<< "${JXA}")
-        echo "Found Zorus Deployment Token $ZORUS_DEPLOYMENT_TOKEN."
-    fi
+    CREDENTIAL_FILE_DATA=$(cat $ZORUS_CREDENTIALS_FILE)
+    ZORUS_DEPLOYMENT_TOKEN=$(getJsonValue "$CREDENTIAL_FILE_DATA" 'CredentialSettings.DeploymentKey')
+    echo "Found Zorus Deployment Token $ZORUS_DEPLOYMENT_TOKEN."
 fi
 
 # Thirdly pull the latest installer
