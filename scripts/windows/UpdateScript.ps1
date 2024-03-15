@@ -5,7 +5,7 @@
 $originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12, [System.Net.SecurityProtocolType]::Tls11
 
-$source = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
+$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
 $destination = "$env:TEMP\ZorusInstaller.exe"
 
 Write-Host "Downloading Zorus Deployment Agent..."

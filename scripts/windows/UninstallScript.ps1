@@ -3,7 +3,7 @@ $Password = ""
 $originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12, [System.Net.SecurityProtocolType]::Tls11
 
-$source = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe";
+$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe";
 $destination = "$env:TEMP\ZorusAgentRemovalTool.exe";
 
 Write-Host "Downloading Zorus Agent Removal Tool..."

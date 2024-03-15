@@ -24,7 +24,7 @@ if ([string]::IsNullOrEmpty($Token))
     Exit
 }
 
-$source = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
+$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
 $destination = "$env:TEMP\ZorusInstaller.exe"
 
 Write-Host "Downloading Zorus Deployment Agent..."
