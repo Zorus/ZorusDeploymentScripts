@@ -4,7 +4,7 @@ $trayIcon = 0; # default is 0
 $addRemove = 0; # default is 0
 
 $originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12, [System.Net.SecurityProtocolType]::Tls11
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
 
 # Determine whether or not the agent is already installed
 $InstalledSoftware = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -24,12 +24,20 @@ if ([string]::IsNullOrEmpty($Token))
     Exit
 }
 
-$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
+$source = "https://static.zorustech.com/downloads/ZorusInstaller.exe"
 $destination = "$env:TEMP\ZorusInstaller.exe"
 
 Write-Host "Downloading Zorus Deployment Agent..."
-$WebClient = New-Object System.Net.WebClient
-$WebClient.DownloadFile($source, $destination)
+try
+{
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile($source, $destination)
+}
+catch
+{
+    Write-Host "Failed to download installer. Exiting."
+    Exit
+}
 
 if ([string]::IsNullOrEmpty($Password))
 {

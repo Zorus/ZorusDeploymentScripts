@@ -1,14 +1,22 @@
 $Password = ""
 
 $originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12, [System.Net.SecurityProtocolType]::Tls11
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
 
-$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe";
+$source = "https://static.zorustech.com/downloads/ZorusAgentRemovalTool.exe";
 $destination = "$env:TEMP\ZorusAgentRemovalTool.exe";
 
 Write-Host "Downloading Zorus Agent Removal Tool..."
-$WebClient = New-Object System.Net.WebClient
-$WebClient.DownloadFile($source, $destination)
+try
+{
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile($source, $destination)
+}
+catch
+{
+    Write-Host "Failed to download removal tool. Exiting."
+    Exit
+}
 
 if ([string]::IsNullOrEmpty($Password))
 {

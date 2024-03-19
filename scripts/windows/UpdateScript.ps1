@@ -3,14 +3,22 @@
 # deployment tokens and other necessary first time install variables.
 
 $originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12, [System.Net.SecurityProtocolType]::Tls11
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
 
-$source = "https://static.zorustech.com.s3.amazonaws.com/downloads/ZorusInstaller.exe"
+$source = "https://static.zorustech.com/downloads/ZorusInstaller.exe"
 $destination = "$env:TEMP\ZorusInstaller.exe"
 
 Write-Host "Downloading Zorus Deployment Agent..."
-$client = New-Object System.Net.WebClient
-$client.DownloadFile($source, $destination)
+try
+{
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile($source, $destination)
+}
+catch
+{
+    Write-Host "Failed to download update. Exiting."
+    Exit
+}
 
 Write-Host "Updating Zorus Deployment Agent..."
 Start-Process -FilePath $destination -ArgumentList @('/qn ALLUSERS="1" AUTO_UPGRADE="1" /L*V "C:\Windows\Temp\ZorusInstaller.log"') -Wait
