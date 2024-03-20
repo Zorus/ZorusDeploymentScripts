@@ -1,20 +1,22 @@
 $Password = ""
 
-if ([Enum]::GetNames([System.Net.SecurityProtocolType]) -contains 'Tls12')
-{
-	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
-}
-else
-{
-	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls
-}
+$originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
 
-$source = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe";
+$source = "https://static.zorustech.com/downloads/ZorusAgentRemovalTool.exe";
 $destination = "$env:TEMP\ZorusAgentRemovalTool.exe";
 
 Write-Host "Downloading Zorus Agent Removal Tool..."
-$WebClient = New-Object System.Net.WebClient
-$WebClient.DownloadFile($source, $destination)
+try
+{
+    $WebClient = New-Object System.Net.WebClient
+    $WebClient.DownloadFile($source, $destination)
+}
+catch
+{
+    Write-Host "Failed to download removal tool. Exiting."
+    Exit
+}
 
 if ([string]::IsNullOrEmpty($Password))
 {
@@ -30,3 +32,5 @@ else
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Removal complete."
+
+[System.Net.ServicePointManager]::SecurityProtocol = $originalProtocol
