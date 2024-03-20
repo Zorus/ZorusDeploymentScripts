@@ -6,10 +6,10 @@ if ([string]::IsNullOrEmpty($Token))
     Exit
 }
 
-$zorusRegistry = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Zorus Inc.\Archon Agent"
-
 # get stored deployment token value
-$previousToken = Get-ItemProperty -Path $zorusRegistry -Name deploymentKey 2>$null | Select-Object -ExpandProperty deploymentKey
+$hklm = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry32)
+$key =  $hklm.OpenSubKey("SOFTWARE\Zorus Inc.\Archon Agent")
+$previousToken = $key.GetValue("deploymentKey")
 
 # get installation path
 $path = Get-ItemProperty -Path $zorusRegistry -Name Path 2>$null | Select-Object -ExpandProperty Path
@@ -23,7 +23,7 @@ if (!$path)
 Start-Process -FilePath "$path\Zorus Deployment Agent\ZorusDeploymentAgent.exe" -ArgumentList "--token=$Token" -Wait
 
 # get stored deployment token value
-$updatedToken = Get-ItemProperty -Path $zorusRegistry -Name deploymentKey 2>$null | Select-Object -ExpandProperty deploymentKey
+$updatedToken = $key.GetValue("deploymentKey")
 
 if ($previousToken -eq $updatedToken)
 {
