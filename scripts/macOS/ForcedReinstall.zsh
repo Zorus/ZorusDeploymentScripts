@@ -55,7 +55,7 @@ getJsonValue() {
 # Secondly check if we have an available deployment token from the current endpoint.
 if [[ -z "$ZORUS_DEPLOYMENT_TOKEN" && -f "$ZORUS_CREDENTIALS_FILE" ]]
 then
-    CREDENTIAL_FILE_DATA=$(cat $ZORUS_CREDENTIALS_FILE)
+    CREDENTIAL_FILE_DATA=$(cat "$ZORUS_CREDENTIALS_FILE")
     ZORUS_DEPLOYMENT_TOKEN=$(getJsonValue "$CREDENTIAL_FILE_DATA" 'CredentialSettings.DeploymentKey')
     echo "Found Zorus Deployment Token $ZORUS_DEPLOYMENT_TOKEN."
 fi
