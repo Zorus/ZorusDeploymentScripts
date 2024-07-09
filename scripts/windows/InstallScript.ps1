@@ -12,7 +12,7 @@ foreach($obj in $InstalledSoftware)
     if ($obj.GetValue('DisplayName') -match "Archon")
     {
         Write-Host "Zorus Deployment Agent is already installed. Exiting."
-        Exit
+        Exit 0
     }
 }
 
@@ -20,7 +20,7 @@ if ([string]::IsNullOrEmpty($Token))
 {
     # Token must be set
     Write-Host "Deployment token not provided. Exiting."
-    Exit
+    Exit 1
 }
 
 $source = "https://static.zorustech.com/downloads/ZorusInstaller.exe"
@@ -35,20 +35,22 @@ try
 catch
 {
     Write-Host "Failed to download installer. Exiting."
-    Exit
+    Exit 1
 }
 
 if ([string]::IsNullOrEmpty($Password))
 {
     Write-Host "Installing Zorus Deployment Agent..."
-    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove" -Wait
+    $Process = Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove" -Wait -NoNewWindow -PassThru
 }
 else
 {
     Write-Host "Installing Zorus Deployment Agent with password..."
-    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove", "UNINSTALL_PASSWORD=$Password" -Wait
+    $Process = Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove", "UNINSTALL_PASSWORD=$Password" -Wait -NoNewWindow -PassThru
 }
 
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Installation complete."
+
+Exit $Process.ExitCode

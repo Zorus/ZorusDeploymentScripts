@@ -17,12 +17,14 @@ try
 catch
 {
     Write-Host "Failed to download update. Exiting."
-    Exit
+    Exit 1
 }
 
 Write-Host "Updating Zorus Deployment Agent..."
-Start-Process -FilePath $destination -ArgumentList @('/qn ALLUSERS="1" AUTO_UPGRADE="1" /L*V "C:\Windows\Temp\ZorusInstaller.log"') -Wait
+$Process = Start-Process -FilePath $destination -ArgumentList @('/qn ALLUSERS="1" AUTO_UPGRADE="1" /L*V "C:\Windows\Temp\ZorusInstaller.log"') -Wait -NoNewWindow -PassThru
 
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Update complete."
+
+Exit $Process.ExitCode

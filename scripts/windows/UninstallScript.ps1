@@ -15,20 +15,22 @@ try
 catch
 {
     Write-Host "Failed to download removal tool. Exiting."
-    Exit
+    Exit 1
 }
 
 if ([string]::IsNullOrEmpty($Password))
 {
     Write-Host "Uninstalling Zorus Deployment Agent..."
-    Start-Process -FilePath $destination -ArgumentList "-s" -Wait
+    $Process = Start-Process -FilePath $destination -ArgumentList "-s" -Wait -NoNewWindow -PassThru
 }
 else
 {
     Write-Host "Uninstalling Zorus Deployment Agent with password..."
-    Start-Process -FilePath $destination -ArgumentList "-s", "-p $Password" -Wait
+    $Process = Start-Process -FilePath $destination -ArgumentList "-s", "-p $Password" -Wait -NoNewWindow -PassThru
 }
 
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Removal complete."
+
+Exit $Process.ExitCode
