@@ -1,7 +1,7 @@
 $Password = ""
 
-$originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
+# Set TLS 1.2 in a manner compatible with older .Net installations.
+[Net.ServicePointManager]::SecurityProtocol = [Enum]::ToObject([Net.SecurityProtocolType], 3072)
 
 $source = "https://static.zorustech.com/downloads/ZorusAgentRemovalTool.exe";
 $destination = "$env:TEMP\ZorusAgentRemovalTool.exe";
@@ -32,5 +32,3 @@ else
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Removal complete."
-
-[System.Net.ServicePointManager]::SecurityProtocol = $originalProtocol

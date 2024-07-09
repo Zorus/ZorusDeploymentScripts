@@ -2,8 +2,8 @@ $Token = "";
 $Password = "";
 $addRemove = 0; # default is 0
 
-$originalProtocol = [System.Net.ServicePointManager]::SecurityProtocol
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::'SystemDefault'
+# Set TLS 1.2 in a manner compatible with older .Net installations.
+[Net.ServicePointManager]::SecurityProtocol = [Enum]::ToObject([Net.SecurityProtocolType], 3072)
 
 # Determine whether or not the agent is already installed
 $InstalledSoftware = Get-ChildItem "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -52,5 +52,3 @@ else
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
 Write-Host "Installation complete."
-
-[System.Net.ServicePointManager]::SecurityProtocol = $originalProtocol
