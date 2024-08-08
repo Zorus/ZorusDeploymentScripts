@@ -15,7 +15,8 @@
 				<dict>
 					<key>X2G78PSXBN</key>
 					<array>
-						<string>com.ZorusTech.Filtering.Redirectors.macOS.Extension</string>
+						<string>com.ZorusTech.Filtering.BlockPage.Extension</string>
+						<string>com.ZorusTech.Filtering.Standard.Extension</string>
 					</array>
 				</dict>
 				<key>PayloadDisplayName</key>
@@ -32,7 +33,8 @@
 				<dict>
 					<key>X2G78PSXBN</key>
 					<array>
-						<string>com.ZorusTech.Filtering.Redirectors.macOS.Extension</string>
+						<string>com.ZorusTech.Filtering.BlockPage.Extension</string>
+						<string>com.ZorusTech.Filtering.Standard.Extension</string>
 					</array>
 				</dict>
 			</dict>
