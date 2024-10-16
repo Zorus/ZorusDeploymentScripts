@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component info="CentraStage Component">
+    <general>
+        <name>Zorus Filtering Install / Uninstall [Windows]</name>
+        <category>scripts</category>
+        <description>Silently performs unattended installs or uninstalls for Zorus Filtering on Windows endpoints.</description>
+        <uid>a4cc30d9-5dd0-4c52-b418-e23b114a7341</uid>
+        <hash/>
+        <version>8</version>
+        <timeout>3600</timeout>
+        <securityLevel>1</securityLevel>
+        <installType>powershell</installType>
+    </general>
+    <variable idx="0">
+        <name>Install</name>
+        <type>boolean</type>
+        <direction>false</direction>
+        <description>Indicates whether or not the script will install or uninstall Zorus Filtering on the endpoint. If the agent is already installed, this script will update the agent if needed.</description>
+        <defaultVal>true</defaultVal>
+    </variable>
+    <variable idx="1">
+        <name>Password</name>
+        <type>string</type>
+        <direction>false</direction>
+        <description>An optional password that when specified will be required to uninstall Zorus Filtering.</description>
+        <defaultVal/>
+    </variable>
+    <variable idx="2">
+        <name>HideAddRemove</name>
+        <type>boolean</type>
+        <direction>false</direction>
+        <description>If set to true, will hide the Zorus Filtering application from users in the Add/Remove Software Menu.</description>
+        <defaultVal>false</defaultVal>
+    </variable>
+    <variable idx="3">
+        <name>ZorusDeploymentToken</name>
+        <type>string</type>
+        <direction>false</direction>
+        <description>The Deployment Token used to provision the endpoint. You may also use the SiteZorusDeploymentToken variable at the Site level in order to apply the same deployment token to multiple endpoints. When ZorusDeploymentToken is specified, it will take precedence over SiteZorusDeploymentToken.</description>
+        <defaultVal/>
+    </variable>
+</component>
