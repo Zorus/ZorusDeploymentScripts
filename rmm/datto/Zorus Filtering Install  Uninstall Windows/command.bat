@@ -1,3 +1,8 @@
+# Zorus Deployment Script for Datto RMM
+# Zorus Filtering Install / Uninstall Component
+# 
+# Special thanks to Datto + Stan Lee for providing examples and guidance for components and ComStore support.
+
 function script:Get-WebClientWithProxy() {
     [System.Net.WebRequest]::DefaultWebProxy = [System.Net.WebRequest]::GetSystemWebProxy()
     [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
@@ -24,9 +29,43 @@ function script:Disable-Tls12Support() {
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -band (-bnot 3072)
 }
 
+function script:Test-DownloadedZorusFile([String]$FilePath) {
+    Write-Host "Verifying downloaded file $($FilePath)."
+    # We first verify that Windows trusts the application. If an attacker can compromise the CA Store in Windows, the endpoint has already been compromised.
+    $SignatureResult = Get-AuthenticodeSignature -FilePath $FilePath
+    if ($SignatureResult.Status -ne 'Valid') {
+        throw "Failed to verify downloaded file $($FilePath) signature due to $($SignatureResult.Status): $($SignatureResult.StatusMessage)"
+    }
+    # Secondly we verify that the signing certificate contains the word Zorus in it.
+    # This is done so that we don't target a specific code signing certificate as these may change over time.
+    if (!$SignatureResult.SignerCertificate.Subject.Contains("Zorus")) {
+        throw "Failed to verify downloaded file $($FilePath) as signature does not contain a leaf certificate that presents itself as Zorus: $($SignatureResult.SignerCertificate.SubjectName)"
+    }
+    # Thirdly, we verify that no part of the certificate chain has been revoked, as Get-AuthenticodeSignature does not validate revocation status.
+    $X509Chain = New-Object System.Security.Cryptography.X509Certificates.X509Chain
+    $X509Chain.ChainPolicy.RevocationFlag = [System.Security.Cryptography.X509Certificates.X509RevocationFlag]::EntireChain
+    $X509Chain.ChainPolicy.RevocationMode = [System.Security.Cryptography.X509Certificates.X509RevocationMode]::Online
+    # Ignore Time Validity, as that is verified by Get-AuthenticodeSignature, since it uses Counter-Signatures to get by Certificate Expiry times.
+    $X509Chain.ChainPolicy.VerificationFlags = [System.Security.Cryptography.X509Certificates.X509VerificationFlags]::IgnoreNotTimeValid
+    $X509Chain.ChainPolicy.UrlRetrievalTimeout = New-Object System.TimeSpan(0, 1, 0)
+    if (!$X509Chain.Build($SignatureResult.SignerCertificate)) {
+        $ChainElementId = 0
+        foreach ($ChainElement in $X509Chain.ChainElements) {
+            Write-Host "Chain $($ChainElementId): $($ChainElement.Certificate.Subject) $($ChainElement.Information)"
+            foreach ($ChainElementStatus in $ChainElement.ChainElementStatus) {
+                Write-Host "Chain $($ChainElementId): $($ChainElementStatus.StatusInformation)"
+            }
+            $ChainElementId += 1
+        }
+        throw "Failed to verify downloaded file $(FilePath) as code signing certificate chain appears invalid: $($SignatureResult.SignerCertificate.SubjectName)"
+    }
+    Write-Host "Successfully verified $($FilePath)"
+}
+
 function global:Install-ZorusFiltering([String]$DeploymentToken, 
                                        [String]$UninstallPassword = $null, 
                                        [Boolean]$HideFromAddRemovePrograms = $false,
+                                       [Boolean]$VerifyDownload = $true,
                                        [String]$DownloadUrl = "https://static.zorustech.com/downloads/ZorusInstaller.exe",
                                        [String]$TempDownloadPath = "$ENV:TEMP\ZorusInstaller.exe",
                                        [String]$LogLocation = "$ENV:TEMP\ZorusInstallLog.log") {
@@ -56,6 +95,10 @@ function global:Install-ZorusFiltering([String]$DeploymentToken,
         Disable-Tls12Support
     }
 
+    if ($VerifyDownload) {
+        Test-DownloadedZorusFile -FilePath $TempDownloadPath
+    }
+
     $InstallerArguments = "/qn", "ARCHON_TOKEN=$DeploymentToken", "/norestart", "ALLUSERS=1"
 
     if (![string]::IsNullOrWhiteSpace($UninstallPassword)) {
@@ -75,7 +118,7 @@ function global:Install-ZorusFiltering([String]$DeploymentToken,
     }
 
     Write-Host $OutputValue
-    $InstallProcess = Start-Process -FilePath $TempDownloadPath -ArgumentList $InstallerArguments -Wait -NoNewWindow  -PassThru
+    $InstallProcess = Start-Process -FilePath $TempDownloadPath -ArgumentList $InstallerArguments -Wait -NoNewWindow -PassThru
     switch ($InstallProcess.ExitCode) {
         0 {
             Write-Host "Successfully Installed Zorus Filtering."
@@ -90,6 +133,7 @@ function global:Install-ZorusFiltering([String]$DeploymentToken,
 }
 
 function global:Uninstall-ZorusFiltering([String]$UninstallPassword = $null,
+                                         [Boolean]$VerifyDownload = $true,
                                          [String]$DownloadUrl = "http://static.zorustech.com.s3.amazonaws.com/downloads/ZorusAgentRemovalTool.exe",
                                          [String]$TempDownloadPath = "$ENV:TEMP\ZorusAgentRemovalTool.exe") {
     $AddedTls12Support = Enable-Tls12Support
@@ -104,6 +148,10 @@ function global:Uninstall-ZorusFiltering([String]$UninstallPassword = $null,
 
     if ($AddedTls12Support) {
         Disable-Tls12Support
+    }
+
+    if ($VerifyDownload) {
+        Test-DownloadedZorusFile -FilePath $TempDownloadPath
     }
 
     $RemovalArguments = @("-s")
@@ -135,6 +183,7 @@ $isDotSourced = $MyInvocation.InvocationName -eq '.' -or $MyInvocation.Line -eq 
 if (!$isDotSourced) {
     $FunctionArgs = @{
         UninstallPassword = $ENV:Password
+        VerifyDownload = $ENV:VerifyZorusDownloads -eq 'true'
     }
 
     if (![String]::IsNullOrWhiteSpace($ENV:ZorusDeploymentToken)) {
