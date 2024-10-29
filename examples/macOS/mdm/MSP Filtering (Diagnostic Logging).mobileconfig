@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
+		<key>ConsentText</key>
+		<dict>
+			<key>default</key>
+			<string>The Zorus MSP Filtering Diagnostic Profile enables low-level logging for the MSP Filtering application and any other associated components that are needed for it to function. These logs may aid support and engineering diagnose hard to reproduce issues. Some personal information may be logged depending on other settings on your system, however as long as you're using encrypted communication over the Internet, neither support nor engineering will be able to view sensitive data such as passwords or email addresses input on browsers or any other application. This profile will only enable sensitive information for the Zorus MSP Filtering components as well as some Apple services (mDNSResponder, Network Extensions) that may affect or be affected by MSP Filtering.
+			
+This profile will automatically be disabled after 7 days of being installed. You may remove the profile at any time by visiting your profiles in your System Settings or removing the profile from MDM.
+
+Including timestamps when communicating with Zorus will greatly help the support and engineering teams pinpoint areas of interest.</string>
+		</dict>
+		<key>DurationUntilRemoval</key>
+		<real>604800</real>
         <key>PayloadDisplayName</key>
         <string>MSP Filtering Diagnostic Logging Profile</string>
         <key>PayloadDescription</key>
@@ -13,10 +24,29 @@
             <dict>
                 <key>Subsystems</key>
                 <dict>
-                    <key>com.ZorusTech.Filtering.Redirectors.macOS.Extension</key>
+                    <key>com.ZorusTech.Filtering.Standard.Extension</key>
                     <dict>
                         <key>DEFAULT-OPTIONS</key>
                         <dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
+                            <key>Level</key>
+                            <dict>
+                                <key>Enable</key>
+                                <string>Debug</string>
+                                <key>Persist</key>
+                                <string>Debug</string>
+                            </dict>
+                            <key>Enable-Private-Data</key>
+                            <true/>
+                        </dict>
+                    </dict>
+					<key>com.ZorusTech.Filtering.BlockPage.Extension</key>
+                    <dict>
+                        <key>DEFAULT-OPTIONS</key>
+                        <dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
                             <key>Level</key>
                             <dict>
                                 <key>Enable</key>
@@ -32,6 +62,8 @@
                     <dict>
                         <key>DEFAULT-OPTIONS</key>
                         <dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
                             <key>Level</key>
                             <dict>
                                 <key>Enable</key>
@@ -47,6 +79,8 @@
                     <dict>
                         <key>DEFAULT-OPTIONS</key>
                         <dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
                             <key>Level</key>
                             <dict>
                                 <key>Enable</key>
@@ -58,6 +92,40 @@
                             <true/>
                         </dict>
                     </dict>
+					<key>com.apple.mDNSResponder</key>
+					<dict>
+						<key>DEFAULT-OPTIONS</key>
+						<dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
+							<key>Level</key>
+							<dict>
+                                <key>Enable</key>
+                                <string>Debug</string>
+                                <key>Persist</key>
+                                <string>Debug</string>
+							</dict>
+                            <key>Enable-Private-Data</key>
+                            <true/>
+						</dict>
+					</dict>
+					<key>com.apple.mdns</key>
+					<dict>
+						<key>DEFAULT-OPTIONS</key>
+						<dict>
+							<key>Enable-Oversize-Messages</key>
+							<true/>
+							<key>Level</key>
+							<dict>
+                                <key>Enable</key>
+                                <string>Debug</string>
+                                <key>Persist</key>
+                                <string>Debug</string>
+							</dict>
+                            <key>Enable-Private-Data</key>
+                            <true/>
+						</dict>
+					</dict>
                 </dict>
                 <key>PayloadDisplayName</key>
                 <string>MSP Filtering Diagnostic Logging</string>
