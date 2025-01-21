@@ -99,7 +99,7 @@ function global:Install-ZorusFiltering([String]$DeploymentToken,
         Test-DownloadedZorusFile -FilePath $TempDownloadPath
     }
 
-    $InstallerArguments = "/qn", "ARCHON_TOKEN=$DeploymentToken", "/norestart", "ALLUSERS=1"
+    $InstallerArguments = "/exenoui", "/qn", "ARCHON_TOKEN=$DeploymentToken", "/norestart", "ALLUSERS=1"
 
     if (![string]::IsNullOrWhiteSpace($UninstallPassword)) {
         $InstallerArguments += "UNINSTALL_PASSWORD=$UninstallPassword"

@@ -41,12 +41,12 @@ catch
 if ([string]::IsNullOrEmpty($Password))
 {
     Write-Host "Installing Zorus Deployment Agent..."
-    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove" -Wait
+    Start-Process -FilePath $destination -ArgumentList "/exenoui", "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove" -Wait
 }
 else
 {
     Write-Host "Installing Zorus Deployment Agent with password..."
-    Start-Process -FilePath $destination -ArgumentList "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove", "UNINSTALL_PASSWORD=$Password" -Wait
+    Start-Process -FilePath $destination -ArgumentList "/exenoui", "/qn", "ARCHON_TOKEN=$Token", "HIDE_ADD_REMOVE=$addRemove", "UNINSTALL_PASSWORD=$Password" -Wait
 }
 
 Write-Host "Removing temporary files..."

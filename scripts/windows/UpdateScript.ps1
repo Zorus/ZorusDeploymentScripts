@@ -21,7 +21,7 @@ catch
 }
 
 Write-Host "Updating Zorus Deployment Agent..."
-Start-Process -FilePath $destination -ArgumentList @('/qn ALLUSERS="1" AUTO_UPGRADE="1" /L*V "C:\Windows\Temp\ZorusInstaller.log"') -Wait
+Start-Process -FilePath $destination -ArgumentList @('/exenoui /qn ALLUSERS="1" AUTO_UPGRADE="1" /L*V "C:\Windows\Temp\ZorusInstaller.log"') -Wait
 
 Write-Host "Removing temporary files..."
 Remove-Item -recurse $destination
